@@ -1,5 +1,6 @@
 package server;
 
+import core.DomainObject;
 import core.IHandler;
 import org.apache.xmlrpc.XmlRpcException;
 import org.apache.xmlrpc.server.PropertyHandlerMapping;
@@ -7,6 +8,32 @@ import org.apache.xmlrpc.server.XmlRpcStreamServer;
 import org.apache.xmlrpc.webserver.WebServer;
 
 import java.io.IOException;
+import java.util.ArrayList;
+
+
+// Osobna klasa do przechowywania stanu - potrzebna w wersji 3.1.3, ale nie w wersji 1.2b
+// używamy singletona, bo to w miarę proste rozwiązanie
+class CallHistory {
+  private static ArrayList<String> history = new ArrayList<String>();
+  private static CallHistory instance = null;
+
+  static synchronized CallHistory getInstance() {
+    if(instance == null) {
+      instance = new CallHistory();
+    }
+    return instance;
+  }
+
+  // i tu interfejs - ponieważ obiekty nigdy nie są usuwane, nie można takich rzeczy robić w kodzie produkcyjnym
+  // ale w przykładowym jak najbardziej
+  synchronized void addToHistory(String s) {
+    history.add(s);
+    System.out.println(String.format("Wywołano już RPCServer %d razy", history.size()));
+  }
+
+  private CallHistory() {}
+}
+
 
 // główna klasa serwera XML-RPC
 // RPCServer jest instancją IHandlera - to upraszcza wnętrznościom xmlrpc tworzenie nowych
@@ -20,9 +47,15 @@ public class RPCServer implements IHandler {
   // identyfikator nie jest konieczny, ale może być ciekawym eksperymentem -
   // czy mamy wątek per żądanie? może pulę? a może wszystko idzie na jednym wątku?
   public String addHello(String s) {
+    CallHistory.getInstance().addToHistory(s);
     String result = "hello " + s;
-    System.out.println(String.format("%d: %s", Thread.currentThread().getId(), result));
+    System.out.println(String.format("Thread %d: %s", Thread.currentThread().getId(), result));
     return result;
+  }
+
+  // przykład serializacji własnego obiektu
+  public DomainObject toDomainObject(String s) {
+    return new DomainObject(s);
   }
 
   // to tylko uproszczony przykład dydaktyczny, w ramach którego ignorujemy błędy komunikacji

@@ -1,0 +1,28 @@
+@startuml
+
+Client -> BugtrackerServer: getTasks(0)
+BugtrackerServer -> Client: tasks = ...
+Client -> BugtrackerServer: setPriority(taskX, 123)
+note right: taskX should not exist on BugtrackerServer
+BugtrackerServer -> Client: TaskDoesNotExist(1)
+Client -> MeasurementServer: measureAddSync(multipleTasks, theirPriorities)
+note right: one of the new tasks should be taskX
+loop foreach task
+  MeasurementServer -> BugtrackerServer: addTask(taskId, priority)
+  BugtrackerServer -> MeasurementServer: returnCode
+end loop
+MeasurementServer -> Client: totalSyncTime
+Client -> BugtrackerServer: setPriority(taskX, 123)
+note right: taskX exists now
+BugtrackerServer -> Client: OK(0)
+Client -> MeasurementServer: measureAddAsync(taskId, priority)
+loop foreach task
+  MeasurementServer --> BugtrackerServer: addTask(taskId, priority)
+  BugtrackerServer --> MeasurementServer: returnCode
+end loop
+MeasurementServer -> MeasurementServer: waitForAllResults
+MeasurementServer -> Client: totalAsyncTime
+Client -> BugtrackerServer: getTasks(123)
+BugtrackerServer -> Client: tasks = ... (containing taskX)
+
+@enduml

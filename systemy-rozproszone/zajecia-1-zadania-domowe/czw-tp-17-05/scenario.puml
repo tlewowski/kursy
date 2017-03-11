@@ -1,0 +1,26 @@
+@startuml
+
+Client -> SupervisedServer: getLoad
+SupervisedServer -> Client: load = ...
+Client -> SupervisedServer: setPersmissions(fileX, newPermissions)
+note right: fileX should not exist on SupervisedServer
+SupervisedServer -> Client: FileDoesNotExist(1)
+Client -> MeasurementServer: measureSyncMove(allFiles, newPaths)
+note right: one of the targets should be fileX
+loop foreach file path
+  MeasurementServer -> SupervisedServer: moveFile(from, to)
+  SupervisedServer -> MeasurementServer: returnCode
+end loop
+MeasurementServer -> Client: totalSyncTime
+Client -> SupervisedServer: setPersmissions(fileX, newPermissions)
+note right: fileX exists now
+SupervisedServer -> Client: OK(0)
+Client -> MeasurementServer: measureAsyncMove(allFiles, newPaths)
+loop foreach file path
+  MeasurementServer --> SupervisedServer: moveFile(from, to)
+  SupervisedServer --> MeasurementServer: returnCode
+end loop
+MeasurementServer -> MeasurementServer: waitForAllResults
+MeasurementServer -> Client: totalAsyncTime
+
+@enduml

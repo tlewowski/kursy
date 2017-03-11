@@ -1,0 +1,2 @@
+Jeśli gdzieś zgubiliście notatki dotyczące zadania domowego dla swojej grupy i nie pamiętacie czego dotyczyło, można bez 
+negatywnych konsekwencji wykonać zadanie z dowolnie wybranej spośród grup czwartkowych.
