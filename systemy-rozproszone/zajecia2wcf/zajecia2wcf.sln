@@ -1,0 +1,34 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 15
+VisualStudioVersion = 15.0.26228.4
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "zajecia2wcf", "zajecia2wcf\zajecia2wcf.csproj", "{7D0E07B3-6ED5-4C7D-98A8-2DEC9444186A}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Task2ServiceHost", "ServiceHost\Task2ServiceHost.csproj", "{4729EB67-A5D2-4E5D-8FF9-DEB56413B229}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Client", "Client\Client.csproj", "{12423B26-061C-4651-B404-60340B55CEE9}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{7D0E07B3-6ED5-4C7D-98A8-2DEC9444186A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7D0E07B3-6ED5-4C7D-98A8-2DEC9444186A}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7D0E07B3-6ED5-4C7D-98A8-2DEC9444186A}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7D0E07B3-6ED5-4C7D-98A8-2DEC9444186A}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4729EB67-A5D2-4E5D-8FF9-DEB56413B229}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4729EB67-A5D2-4E5D-8FF9-DEB56413B229}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4729EB67-A5D2-4E5D-8FF9-DEB56413B229}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4729EB67-A5D2-4E5D-8FF9-DEB56413B229}.Release|Any CPU.Build.0 = Release|Any CPU
+		{12423B26-061C-4651-B404-60340B55CEE9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{12423B26-061C-4651-B404-60340B55CEE9}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{12423B26-061C-4651-B404-60340B55CEE9}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{12423B26-061C-4651-B404-60340B55CEE9}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal
