@@ -84,9 +84,13 @@ public class RPCClient {
     // kłopocik - nie wiemy kiedy się ta funkcja skończy!
     // ale i na to jest ratunek: TimingOutCallback!
     // co prawda nie dla poprzedniego wywołania, ale będziemy wiedzieć na przyszłość
+    // tej klasy nie ma w wersji 1.2b biblioteki
     TimingOutCallback cb1 = new TimingOutCallback(1000); // timeout w milisekundach
     TimingOutCallback cb2 = new TimingOutCallback(1000); // timeout w milisekundach
     TimingOutCallback cb3 = new TimingOutCallback(1000); // timeout w milisekundach
+
+    // pomiar czasu asynchronicznego wywołania!
+    long startAsync = System.currentTimeMillis();
 
     // wywołania z callbackami oczekującymi - każde wywołanie potrzebuje swojego callbacku
     client.executeAsync("core.IHandler.addHello", Arrays.asList("panda"), cb1);
@@ -97,10 +101,12 @@ public class RPCClient {
     String res1 = (String)cb1.waitForResponse();
     String res2 = (String)cb2.waitForResponse();
     String res3 = (String)cb3.waitForResponse();
+    long endAsync = System.currentTimeMillis();
 
     System.out.println(String.format("Z serwera miało przyjść hello panda a przyszło %s", res1));
     System.out.println(String.format("Z serwera miało przyjść hello zebra a przyszło %s", res2));
     System.out.println(String.format("Z serwera miało przyjść hello waran a przyszło %s", res3));
+    System.out.println(String.format("Asynchroniczne wywołania trwały: %d", endAsync - startAsync));
 
     // można też połączyć własny callback z TimingOutCallbackiem, ale to już zostawiam Wam ;)
   }

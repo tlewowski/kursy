@@ -1,0 +1,57 @@
+@startuml
+
+Client -> ResourceServer: delete X
+ResourceServer -> Client : 404 Not Found
+Client -> ResourceServer : put X Y
+ResourceServer -> Client : 200 OK
+Client -> ResourceServer : put X Y1
+ResourceServer -> Client : 403 Forbidden
+Client -> MeasurementServer : measureSyncManagement(uris, values)
+
+loop foreach uri value
+  MeasurementServer -> ResourceServer : get(uri)
+  ResourceServer -> MeasurementServer : 404 Not Found
+  MeasurementServer -> ResourceServer : put(uri, value)
+  ResourceServer -> MeasurementServer : 200 OK
+  MeasurementServer -> ResourceServer : get(uri)
+  ResourceServer -> MeasurementServer : value
+  MeasurementServer -> ResourceServer : delete(uri)
+  ResourceServer -> MeasurementServer : 200 OK
+  MeasurementServer -> ResourceServer : get(uri)
+  ResourceServer -> MeasurementServer : 200 OK
+end loop
+MeasurementServer -> Client: totalSyncTime
+note left: Scenariusz 1 - dla scenariusza 2 trzeba sobie poradzić bez takiego diagramu
+Client -> MeasurementServer: measureAsyncManagement(uris, values)
+loop foreach file path
+  MeasurementServer --> ResourceServer : get(uri)
+  ResourceServer --> MeasurementServer : 404 Not Found
+end loop
+MeasurementServer -> MeasurementServer : waitForAllGets
+
+loop foreach file path
+  MeasurementServer --> ResourceServer : put(uri, value)
+  ResourceServer --> MeasurementServer : 200 OK
+end loop
+MeasurementServer -> MeasurementServer : waitForAllPuts
+
+loop foreach file path
+  MeasurementServer --> ResourceServer : get(uri)
+  ResourceServer --> MeasurementServer : value
+end loop
+MeasurementServer -> MeasurementServer : waitForAllGets
+
+loop foreach file path
+  MeasurementServer --> ResourceServer : delete(uri)
+  ResourceServer --> MeasurementServer : 200 OK
+end loop
+MeasurementServer -> MeasurementServer : waitForAllDeletes
+
+loop foreach file path
+  MeasurementServer --> ResourceServer : get(uri)
+  ResourceServer --> MeasurementServer : 404 Not Found
+end loop
+MeasurementServer -> MeasurementServer : waitForAllGets
+
+MeasurementServer -> Client: totalAsyncTime
+@enduml
