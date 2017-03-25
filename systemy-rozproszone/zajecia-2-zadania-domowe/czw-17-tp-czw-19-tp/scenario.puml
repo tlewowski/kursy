@@ -1,0 +1,31 @@
+@startuml
+
+Client1 -> Bookshelf: putPrivate(book1, client1)
+Bookshelf -> Client1: id1
+Client1 -> Bookshelf: putPublic(book2, client1)
+Bookshelf -> Client1: id2
+Client2 -> Bookshelf: putPrivate(book3, client2)
+Bookshelf -> Client2: id3
+Client2 -> Bookshelf: putPublic(book4, client2)
+Bookshelf -> Client2: id4
+
+Client1 -> Bookshelf: get(id1, client1)
+Bookshelf -> Client1: book1
+Client1 -> Bookshelf: get(id3, client1)
+Bookshelf -> Client1: null
+Client1 -> Bookshelf: get(id4, client1)
+Bookshelf -> Client1: book4
+
+Client2 -> Bookshelf: get(id2, client2)
+Bookshelf -> Client2: book2
+Client2 -> Bookshelf: delete(id2, client2)
+Bookshelf -> Client2: true
+Client2 -> Bookshelf: putPublic(book2)
+Bookshelf -> Client2: id5
+
+Client1 -> Bookshelf: get(id2, client2)
+Bookshelf -> Client1: null
+Client1 -> Bookshelf: delete(id3, client1)
+Bookshelf -> Client1: false
+
+@enduml
