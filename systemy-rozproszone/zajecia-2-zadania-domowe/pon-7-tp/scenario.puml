@@ -1,0 +1,31 @@
+@startuml
+
+Client1 -> IssueTracker: putIssue(issue1, project1)
+IssueTracker -> Client1: id1
+Client1 -> IssueTracker: putIssue(issue2, project1)
+IssueTracker -> Client1: id2
+Client2 -> IssueTracker: putIssue(issue3, project2)
+IssueTracker -> Client2: id3
+Client2 -> IssueTracker: putIssue(issue4, project2)
+IssueTracker -> Client2: id4
+
+Client1 -> IssueTracker: get(id1, project1)
+IssueTracker -> Client1: issue1
+Client1 -> IssueTracker: get(id3, project1)
+IssueTracker -> Client1: null
+Client1 -> IssueTracker: get(id4, project2)
+IssueTracker -> Client1: issue4
+
+Client2 -> IssueTracker: get(id2, project1)
+IssueTracker -> Client2: issue2
+Client2 -> IssueTracker: delete(id2, project1)
+IssueTracker -> Client2: true
+Client2 -> IssueTracker: putIssue(issue2, project2)
+IssueTracker -> Client2: id5
+
+Client1 -> IssueTracker: get(id2, project1)
+IssueTracker -> Client1: null
+Client1 -> IssueTracker: delete(id3, project1)
+IssueTracker -> Client1: false
+
+@enduml

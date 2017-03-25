@@ -23,7 +23,7 @@ Bookshelf -> Client2: true
 Client2 -> Bookshelf: putPublic(book2)
 Bookshelf -> Client2: id5
 
-Client1 -> Bookshelf: get(id2, client2)
+Client1 -> Bookshelf: get(id2, client1)
 Bookshelf -> Client1: null
 Client1 -> Bookshelf: delete(id3, client1)
 Bookshelf -> Client1: false
