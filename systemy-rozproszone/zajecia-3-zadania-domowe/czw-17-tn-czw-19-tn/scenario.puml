@@ -1,0 +1,38 @@
+@startuml
+
+Client -> ReverseProxy: createResource("uri1", 11)
+ReverseProxy -> Application: createResource("uri1", 11)
+Application -> ReverseProxy: 201
+ReverseProxy -> Client: 201
+
+Client -> ReverseProxy: createResource("uri2", 22)
+ReverseProxy -> Application: createResource("uri2", 22)
+Application -> ReverseProxy: 201
+ReverseProxy -> Client: 201
+
+Client -> ReverseProxy: createResource("uri1", 12)
+ReverseProxy -> Application: createResource("uri1", 12)
+Application -> ReverseProxy: 403
+ReverseProxy -> Client: 403
+
+Client -> ReverseProxy: get("uri3")
+ReverseProxy -> CachingProxy: get("uri3")
+CachingProxy -> Application: get("uri3")
+Application -> CachingProxy: null
+CachingProxy -> ReverseProxy: null
+ReverseProxy -> Client: null
+
+Client -> ReverseProxy: get("uri1")
+ReverseProxy -> CachingProxy: get("uri1")
+CachingProxy -> Application: get("uri1")
+Application -> CachingProxy: Resource("uri1", 11)
+CachingProxy -> CachingProxy: saveResource("uri1", 11)
+CachingProxy -> ReverseProxy: Resource("uri1", 11)
+ReverseProxy -> Client: Resource("uri1", 11)
+
+Client -> ReverseProxy: get("uri1")
+ReverseProxy -> CachingProxy: get("uri1")
+CachingProxy -> ReverseProxy: Resource("uri1", 11)
+ReverseProxy -> Client: Resource("uri1", 11)
+
+@enduml

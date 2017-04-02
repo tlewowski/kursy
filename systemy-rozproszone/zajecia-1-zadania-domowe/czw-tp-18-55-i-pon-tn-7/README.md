@@ -36,7 +36,7 @@ Ka¿da wywo³ana funkcja z interfejsu powinna drukowaæ swoje wykonanie i argumenty
  
 **Client** powinien wykonaæ nastêpuj¹ce operacje: 
  
- - wywo³aæ `getTasks(0)` z `SupervisedServer` i wydrukowaæ uzyskan¹ listê
+ - wywo³aæ `getTasks(0)` z `BugtrackerServer` i wydrukowaæ uzyskan¹ listê
  - wywo³aæ `setPriority(id, 123)` z nieistniej¹cym ID zadania - nale¿y oczekiwaæ odpowiedzi 1
  - wywo³aæ `measureAddSync` z co najmniej 150 zadaniami - jednym z dodanych id powinno byæ id u¿yte w poprzednim punkcie, wydrukowaæ wynik
  - wywo³aæ `setPriority(id, 123)` z t¹ sam¹ œcie¿k¹ co poprzednio - zadanie ju¿ istnieje, wiêc nale¿y oczekiwaæ odpowiedzi 0
