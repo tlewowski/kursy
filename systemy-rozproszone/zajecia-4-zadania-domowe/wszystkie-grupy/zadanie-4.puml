@@ -1,0 +1,19 @@
+@startuml
+
+Client --> MultimediaServer: getImages()
+Client --> MultimediaServer: getTags()
+Client --> MultimediaServer: postTag(tag1)
+Client --> MultimediaServer: postTag(tag2)
+Client --> MultimediaServer: postTag(tag3)
+Client <-- MultimediaServer: tag1 OK
+Client <-- MultimediaServer: tag2 OK
+Client <-- MultimediaServer: tag3 OK
+Client --> MultimediaServer: getTags()
+Client <-- MultimediaServer: images
+Client <-- MultimediaServer: tags1
+Client <-- MultimediaServer: tags2
+Client --> MultimediaServer: getImage(image1)
+Client <- MultimediaServer: image1
+
+
+@enduml
